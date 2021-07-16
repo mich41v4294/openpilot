@@ -1,9 +1,0 @@
-[submodule "laika_repo"]
-	path = laika_repo
-	url = ../../commaai/laika.git
-[submodule "cereal"]
-	path = cereal
-	url = ../../CineXWorm/cereal.git
-[submodule "rednose_repo"]
-	path = rednose_repo
-	url = ../../commaai/rednose.git
