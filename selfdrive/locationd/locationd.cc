@@ -203,7 +203,7 @@ void Localizer::handle_sensors(double current_time, const capnp::List<cereal::Se
     }
 
       // TODO: handle messages from two IMUs at the same time
-    if (sensor_reading.getSource() == cereal::SensorEventData::SensorSource::LSM6DS3) {
+    if (sensor_reading.getSource() == cereal::SensorEventData::SensorSource::BMX055) {
       continue;
     }
 
@@ -469,7 +469,7 @@ int Localizer::locationd_thread() {
 }
 
 int main() {
-  setpriority(PRIO_PROCESS, 0, -20);
+  set_realtime_priority(5);
 
   Localizer localizer;
   return localizer.locationd_thread();
