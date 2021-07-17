@@ -3,7 +3,6 @@ import time
 import json
 
 import jwt
-
 from datetime import datetime, timedelta
 from common.api import api_get
 from common.params import Params
