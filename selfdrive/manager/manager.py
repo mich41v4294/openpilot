@@ -52,8 +52,8 @@ def manager_init():
   if os.getenv("PASSIVE") is not None:
     params.put_bool("Passive", bool(int(os.getenv("PASSIVE"))))
 
-  if params.get("Passive") is None:
-    raise Exception("Passive must be set to continue")
+  # if params.get("Passive") is None:
+  #  raise Exception("Passive must be set to continue")
 
   os.umask(0)  # Make sure we can create files with 777 permissions
 

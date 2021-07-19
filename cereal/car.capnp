@@ -129,6 +129,15 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     neosUpdateRequiredDEPRECATED @88;
     modelLagWarningDEPRECATED @93;
     startupOneplusDEPRECATED @82;
+
+    pqTimebombWarn @105;
+    pqTimebombBypassing @106;
+    pqTimebombBypassed @107;
+    pqTimebombTERMINAL @108;
+
+    pqShiftUP @109;
+    pqShiftDOWN @110;
+    espInterventionDisengage @111;
   }
 }
 
