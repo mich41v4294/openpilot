@@ -384,7 +384,7 @@ struct CarParams {
   safetyModelPassive @42 :SafetyModel = silent;
   safetyParam @10 :Int16;
 
-    steerMaxBP @11 :List(Float32);
+  steerMaxBP @11 :List(Float32);
   steerMaxV @12 :List(Float32);
   gasMaxBP @13 :List(Float32);
   gasMaxV @14 :List(Float32);
