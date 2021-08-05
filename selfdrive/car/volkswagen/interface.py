@@ -28,7 +28,6 @@ class CarInterface(CarInterfaceBase):
   def get_params(candidate, fingerprint=gen_empty_fingerprint(), has_relay=False, car_fw=None):
     ret = CarInterfaceBase.get_std_params(candidate, fingerprint)
 
-    ret.enableCamera = True  # Stock camera detection doesn't apply to VW
     ret.carName = "volkswagen"
     ret.radarOffCan = False
 
@@ -62,6 +61,7 @@ class CarInterface(CarInterfaceBase):
         # No trans message at all, must be a true stick-shift manual
         ret.transmissionType = TransmissionType.manual
 
+
     # Global tuning defaults, can be overridden per-vehicle
 
     ret.steerRateCost = 1.0
@@ -74,70 +74,12 @@ class CarInterface(CarInterfaceBase):
     ret.lateralTuning.pid.kpV = [0.6]
     ret.lateralTuning.pid.kiV = [0.2]
 
-    # Per-chassis tuning values, override tuning defaults here if desired
-
-    if candidate == CAR.ATLAS_MK1:
-      # Averages of all CA Atlas variants
-      ret.mass = 2011 + STD_CARGO_KG
-      ret.wheelbase = 2.98
-
-    elif candidate == CAR.GOLF_MK7:
-      # Averages of all AU Golf variants
-      ret.mass = 1397 + STD_CARGO_KG
-      ret.wheelbase = 2.62
-
-    elif candidate == CAR.JETTA_MK7:
-      # Averages of all BU Jetta variants
-      ret.mass = 1328 + STD_CARGO_KG
-      ret.wheelbase = 2.71
-
-    elif candidate == CAR.PASSAT_MK8:
-      # Averages of all 3C Passat variants
-      ret.mass = 1551 + STD_CARGO_KG
-      ret.wheelbase = 2.79
-
-    elif candidate == CAR.TIGUAN_MK2:
-      # Average of SWB and LWB variants
-      ret.mass = 1715 + STD_CARGO_KG
-      ret.wheelbase = 2.74
-
-    elif candidate == CAR.TOURAN_MK2:
-      # Average of SWB and LWB variants
-      ret.mass = 1516 + STD_CARGO_KG
-      ret.wheelbase = 2.79
-
-    elif candidate == CAR.AUDI_A3_MK3:
-      # Averages of all 8V A3 variants
-      ret.mass = 1335 + STD_CARGO_KG
-      ret.wheelbase = 2.61
-
-    elif candidate == CAR.AUDI_Q2_MK1:
-      # Averages of all GA Q2 variants
-      ret.mass = 1205 + STD_CARGO_KG
-      ret.wheelbase = 2.61
-
-    elif candidate == CAR.SEAT_ATECA_MK1:
-      # Averages of all 5F Ateca variants
-      ret.mass = 1900 + STD_CARGO_KG
-      ret.wheelbase = 2.64
-
-      # Determine transmission type by CAN message(s) present on the bus
-      if 0xAD in fingerprint[0]:
-        # Getribe_11 message detected: traditional automatic or DSG gearbox
-        ret.transmissionType = TRANS.automatic
-      elif 0x187 in fingerprint[0]:
-        # EV_Gearshift message detected: e-Golf or similar direct-drive electric
-        ret.transmissionType = TRANS.direct
-      else:
-        # No trans message at all, must be a true stick-shift manual
-        ret.transmissionType = TRANS.manual
-
       # FIXME: Per-vehicle parameters need to be reintegrated.
-      if candidate == CAR.GENERICMQB:
-        ret.mass = 1500 + STD_CARGO_KG
-        ret.wheelbase = 2.64
-        ret.centerToFront = ret.wheelbase * 0.45
-        ret.steerRatio = 15.9
+    if candidate == CAR.GENERICMQB:
+      ret.mass = 1500 + STD_CARGO_KG
+      ret.wheelbase = 2.64
+      ret.centerToFront = ret.wheelbase * 0.45
+      ret.steerRatio = 15.9
 
     elif candidate in PQ_CARS:
       # Configuration items shared between all PQ35/PQ46/NMS vehicles
@@ -146,10 +88,10 @@ class CarInterface(CarInterfaceBase):
       # Determine transmission type by CAN message(s) present on the bus
       if 0x440 in fingerprint[0]:
         # Getriebe_1 detected: traditional automatic or DSG gearbox
-        ret.transmissionType = TRANS.automatic
+        ret.transmissionType = TransmissionType.automatic
       else:
         # No trans message at all, must be a true stick-shift manual
-        ret.transmissionType = TRANS.manual
+        ret.transmissionType = TransmissionType.manual
 
       # FIXME: Per-vehicle parameters need to be reintegrated.
       ret.mass = 1375 + STD_CARGO_KG
@@ -196,9 +138,6 @@ class CarInterface(CarInterfaceBase):
     #  ret.networkLocation = NWL.gateway
     ret.networkLocation = NWL.gateway
 
-    cloudlog.warning("Detected safety model: %s", ret.safetyModel)
-    cloudlog.warning("Detected network location: %s", ret.networkLocation)
-    cloudlog.warning("Detected transmission type: %s", ret.transmissionType)
 
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
@@ -228,8 +167,8 @@ class CarInterface(CarInterfaceBase):
     # TODO: add a field for this to carState, car interface code shouldn't write params
     # Update the device metric configuration to match the car at first startup,
     # or if there's been a change.
-    if self.CS.displayMetricUnits != self.displayMetricUnitsPrev:
-      put_nonblocking("IsMetric", "0" if self.CS.displayMetricUnits else "0")
+    #if self.CS.displayMetricUnits != self.displayMetricUnitsPrev:
+    #  put_nonblocking("IsMetric", "0" if self.CS.displayMetricUnits else "0")
 
     # Check for and process state-change events (button press or release) from
     # the turn stalk switch or ACC steering wheel/control stalk buttons.

@@ -2,7 +2,7 @@ from cereal import car
 from common.numpy_fast import clip
 from selfdrive.car import apply_std_steer_torque_limits
 from selfdrive.car.volkswagen import volkswagencan
-from selfdrive.car.volkswagen.values import DBC_FILES, CANBUS, NWL, MQB_LDW_MESSAGES, BUTTON_STATES, CarControllerParams as P, PQ_LDW_MESSAGES
+from selfdrive.car.volkswagen.values import DBC, CANBUS, NWL, MQB_LDW_MESSAGES, BUTTON_STATES, CarControllerParams as P, PQ_LDW_MESSAGES
 from opendbc.can.packer import CANPacker
 
 VisualAlert = car.CarControl.HUDControl.VisualAlert
@@ -14,14 +14,14 @@ class CarController():
     self.mobEnabled = False
     self.radarVin_idx = 0
 
-    self.packer_pt = CANPacker(DBC_FILES[CP.carFingerprint]['pt'])
+    self.packer_pt = CANPacker(DBC[CP.carFingerprint]['pt'])
     self.acc_bus = CANBUS.pt if CP.networkLocation == NWL.fwdCamera else CANBUS.cam
 
     if CP.safetyModel == car.CarParams.SafetyModel.volkswagen:
       self.create_steering_control = volkswagencan.create_mqb_steering_control
       self.create_acc_buttons_control = volkswagencan.create_mqb_acc_buttons_control
       self.create_hud_control = volkswagencan.create_mqb_hud_control
-      self.ldw_step = CarControllerParams.MQB_LDW_STEP
+      self.ldw_step = P.MQB_LDW_STEP
     elif CP.safetyModel == car.CarParams.SafetyModel.volkswagenPq:
       self.create_steering_control = volkswagencan.create_pq_steering_control
       self.create_acc_buttons_control = volkswagencan.create_pq_acc_buttons_control
@@ -29,7 +29,7 @@ class CarController():
       self.create_braking_control = volkswagencan.create_pq_braking_control
       self.create_gas_control = volkswagencan.create_pq_pedal_control
       self.create_awv_control = volkswagencan.create_pq_awv_control
-      self.ldw_step = CarControllerParams.PQ_LDW_STEP
+      self.ldw_step = P.PQ_LDW_STEP
 
     self.hcaSameTorqueCount = 0
     self.hcaEnabledFrameCount = 0
@@ -202,8 +202,8 @@ class CarController():
         hud_alert = PQ_LDW_MESSAGES["none"]
 
       can_sends.append(self.create_hud_control(self.packer_pt, CANBUS.pt, hcaEnabled,
-                                                            CS.out.steeringPressed, hud_alert, leftLaneVisible,
-                                                            rightLaneVisible, CS.ldw_lane_warning_left,
+                                                            CS.out.steeringPressed, hud_alert, left_lane_visible,
+                                                            right_lane_visible, CS.ldw_lane_warning_left,
                                                             CS.ldw_lane_warning_right, CS.ldw_side_dlc_tlc,
                                                             CS.ldw_dlc, CS.ldw_tlc))
 

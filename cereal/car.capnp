@@ -176,6 +176,8 @@ struct CarState {
   stockFcw @31 :Bool;
   espDisabled @32 :Bool;
 
+  stopSteering @37 :Bool;
+
   # cruise state
   cruiseState @10 :CruiseState;
 
@@ -255,7 +257,7 @@ struct CarState {
   }
 
   errorsDEPRECATED @0 :List(CarEvent.EventName);
-  brakeLightsDEPRECATED @19 :Bool;
+  brakeLights @19 :Bool;
 }
 
 # ******* radar state @ 20hz *******
