@@ -111,8 +111,8 @@ def set_eon_fan(val):
   #    bus.write_byte_data(0x21, 0x04, 0x2)
   #    bus.write_byte_data(0x21, 0x03, (val*2)+1)
   #    bus.write_byte_data(0x21, 0x04, 0x4)
-    bus.close()
-    last_eon_fan_val = val
+  #  bus.close()
+  #  last_eon_fan_val = val
 
 
 # temp thresholds to control fan speed - high hysteresis
