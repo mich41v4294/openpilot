@@ -36,7 +36,7 @@ class CarInterface(CarInterfaceBase):
 
     # Common default parameters that may be overridden per-vehicle
     ret.steerRateCost = 1.0
-    ret.steerActuatorDelay = 0.1
+    ret.steerActuatorDelay = 0.05
     ret.steerLimitTimer = 0.4
     ret.lateralTuning.pid.kf = 0.00006
     ret.lateralTuning.pid.kpV = [0.3]
