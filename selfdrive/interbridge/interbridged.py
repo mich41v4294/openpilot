@@ -20,7 +20,7 @@ class InterBridge:
     'liveCalibration',
     'carState',
     'carControl',
-    'longitudinalPlan',
+    'Plan',
     #'liveLocation',
     #'liveMpc',
     #'liveLongitudinalMpc',
