@@ -26,7 +26,7 @@ class InterBridge:
     #'liveLongitudinalMpc',
     'liveParameters',
     'cameraOdometry',
-    'lateralPlan',
+    'PathPlan',
     'carParams',
     'frontFrame',
     'driverState',
