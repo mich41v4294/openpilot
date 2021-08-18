@@ -26,11 +26,11 @@ class InterBridge:
     #'liveLongitudinalMpc',
     'liveParameters',
     'cameraOdometry',
-    'PathPlan',
+    'pathPlan',
     'carParams',
     'frontFrame',
     'driverState',
-    'driverMonitoringState',
+    'dMonitoringState',
     #'modelV2',
     'testJoystick',
   ]
