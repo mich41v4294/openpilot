@@ -3,7 +3,7 @@ import socketserver
 
 PORT = 89
 HOST = "0.0.0.0"
-DIRECTORY = '.'  # 'livedash' when served from OpenPilot location 'openpilot/selfdrive/livedash'
+DIRECTORY = 'livedash'
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
