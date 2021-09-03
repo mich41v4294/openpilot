@@ -132,7 +132,7 @@ class CarController():
       self.mobPreEnable = mobPreEnable
       self.mobEnabled = mobEnabled
       can_sends.append(
-        self.create_braking_control(self.packer_pt, CANBUS.br, apply_brake, idx, mobEnabled, mobPreEnable, stopping_wish))
+        self.create_braking_control(self.packer_pt, CANBUS.pt, apply_brake, idx, mobEnabled, mobPreEnable, stopping_wish))
 
     # **** GAS Controls ***************************************************** #
     if (frame % P.GAS_STEP == 0) and CS.CP.enableGasInterceptor:
@@ -140,7 +140,7 @@ class CarController():
       if enabled:
         apply_gas = int(round(interp(actuators.accel, P.GAS_LOOKUP_BP, P.GAS_LOOKUP_V)))
 
-      can_sends.append(self.create_gas_control(self.packer_pt, CANBUS.cam, apply_gas, frame // 2))
+      can_sends.append(self.create_gas_control(self.packer_pt, CANBUS.pt, apply_gas, frame // 2))
 
     # **** HUD Controls ***************************************************** #
 
