@@ -50,10 +50,12 @@ def register(show_spinner=False) -> str:
       private_key = f2.read()
 
     # Block until we get the imei
-    imei1, imei2 = None, None
+    imei1 = "696969696969601"
+    imei2 = "696969696969602"
     while imei1 is None and imei2 is None:
       try:
-        imei1, imei2 = HARDWARE.get_imei(0), HARDWARE.get_imei(1)
+        imei1 = "696969696969601"
+        imei2 = "696969696969602"
       except Exception:
         cloudlog.exception("Error getting imei, trying again...")
         time.sleep(1)
