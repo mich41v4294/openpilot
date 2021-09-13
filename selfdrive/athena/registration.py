@@ -55,9 +55,6 @@ def register(show_spinner=False) -> str:
     imei1 = "696969696969601"
     imei2 = "696969696969602"
 
-      if time.monotonic() - start_time > 60 and show_spinner:
-        spinner.update(f"registering device - serial: {serial}, IMEI: ({imei1}, {imei2})")
-
     params.put("IMEI", imei1)
     params.put("HardwareSerial", serial)
 
