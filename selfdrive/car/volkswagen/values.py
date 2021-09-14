@@ -91,7 +91,16 @@ class CAR:
 # tuners sometimes tamper with that field (e.g. 8V0 9C0 BB0 1 from COBB/EQT). Tampered
 # ECU SW part numbers are invalid for vehicle ID and compatibility checks. Try to have
 # them repaired by the tuner before including them in openpilot.
-
+FINGERPTINTS = {
+  CAR.SKODA_RAPID_SPACEBACK:[
+    {16: 8, 17: 8, 64: 8, 65: 8, 134: 8, 159: 8, 167: 8, 168: 8, 178: 8, 253: 8, 257: 8, 262: 8,
+     263: 8, 278: 8, 285: 8, 286: 8, 288: 8, 289: 8, 299: 8, 779: 8, 795: 8, 798: 8, 810: 8, 812: 8,
+     869: 8, 870: 8, 901: 8, 913: 8, 914: 8, 949: 8, 958: 8, 960: 4, 967: 8, 980: 8, 981: 8, 982: 8,
+     987: 8, 989: 8, 997: 8, 1000: 8, 1004: 8, 1175: 8, 1312: 8, 1413: 8, 1520: 8, 1600: 8, 1601: 8,
+     1602: 8, 1603: 8, 1607: 8, 1610: 4, 1624: 8, 1626: 8, 1629: 8, 1630: 8, 1631: 8, 1648: 8, 1654: 8,
+     1714: 8, 1716: 8, 1719: 8, 1720: 8
+    }],
+}
 FW_VERSIONS = {
   CAR.ATLAS_MK1: {
     (Ecu.engine, 0x7e0, None): [
