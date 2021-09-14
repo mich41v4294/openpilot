@@ -7,9 +7,6 @@
 [submodule "cereal"]
 	path = cereal
 	url = ../../commaai/cereal.git
-[submodule "panda"]
-	path = panda
-	url = ../../commaai/panda.git
 [submodule "rednose_repo"]
 	path = rednose_repo
 	url = ../../commaai/rednose.git
