@@ -7,12 +7,12 @@
 [submodule "cereal"]
 	path = cereal
 	url = ../../commaai/cereal.git
-<<<<<<< HEAD
-[submodule "panda"]
-	path = panda
-	url = https://github.com/commaai/panda/
-=======
->>>>>>> 0d9d147b2cd04f1ca5ea6f62163b86b159462e44
+
+
+
+
+
+
 [submodule "rednose_repo"]
 	path = rednose_repo
 	url = ../../commaai/rednose.git
