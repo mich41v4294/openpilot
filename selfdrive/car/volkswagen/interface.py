@@ -122,10 +122,6 @@ class CarInterface(CarInterfaceBase):
     elif candidate == CAR.SKODA_SUPERB_MK3:
       ret.mass = 1505 + STD_CARGO_KG
       ret.wheelbase = 2.84
-
-    elif candidate == CAR.SKODA_RAPID_SPACEBACK:
-      ret.mass = 1312 + STD_CARGO_KG
-      ret.wheelbase = 2.60
       
     # TODO: get actual value, for now starting with reasonable value for
     # civic and scaling by mass and wheelbase
