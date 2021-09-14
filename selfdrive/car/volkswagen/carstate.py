@@ -38,7 +38,7 @@ class CarState(CarStateBase):
     ret.yawRate = pt_cp.vl["ESP_02"]["ESP_Gierrate"] * (1, -1)[int(pt_cp.vl["ESP_02"]["ESP_VZ_Gierrate"])] * CV.DEG_TO_RAD
 
     # Verify EPS readiness to accept steering commands
-    hca_status = self.hca_status_values.get(pt_cp.vl["LH_EPS_03"]["EPS_HCA_Status"])
+    hca_status = 3
     ret.steerError = hca_status in ["DISABLED", "FAULT"]
     ret.steerWarning = hca_status in ["INITIALIZING", "REJECTED"]
 
