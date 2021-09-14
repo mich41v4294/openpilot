@@ -92,7 +92,7 @@ class CarState(CarStateBase):
 
     # Update ACC setpoint. When the setpoint is zero or there's an error, the
     # radar sends a set-speed of ~90.69 m/s / 203mph.
-    ret.cruiseState.speed = ext_cp.vl["TSK_07"]["TSK_Wunschgeschw"] * CV.KPH_TO_MS
+    ret.cruiseState.speed = ext_cp.vl["ACC_02"]["ACC_Wunschgeschw"] * CV.KPH_TO_MS
     if ret.cruiseState.speed > 90:
       ret.cruiseState.speed = 0
 
@@ -199,7 +199,15 @@ class CarState(CarStateBase):
       signals += [("MO_Kuppl_schalter", "Motor_14", 0),  # Clutch switch
                   ("BCM1_Rueckfahrlicht_Schalter", "Gateway_72", 0)]  # Reverse light from BCM
       checks += [("Motor_14", 10)]  # From J623 Engine control module
-      
+
+    if CP.networkLocation == NetworkLocation.fwdCamera:
+      # Radars are here on CANBUS.pt
+      signals += MqbExtraSignals.fwd_radar_signals
+      checks += MqbExtraSignals.fwd_radar_checks
+      if CP.enableBsm:
+        signals += MqbExtraSignals.bsm_radar_signals
+        checks += MqbExtraSignals.bsm_radar_checks
+
     return CANParser(DBC_FILES.mqb, signals, checks, CANBUS.pt)
 
   @staticmethod
@@ -208,4 +216,47 @@ class CarState(CarStateBase):
     signals = []
     checks = []
 
+    if CP.networkLocation == NetworkLocation.fwdCamera:
+      signals += [
+        # sig_name, sig_address, default
+        ("LDW_SW_Warnung_links", "LDW_02", 0),      # Blind spot in warning mode on left side due to lane departure
+        ("LDW_SW_Warnung_rechts", "LDW_02", 0),     # Blind spot in warning mode on right side due to lane departure
+        ("LDW_Seite_DLCTLC", "LDW_02", 0),          # Direction of most likely lane departure (left or right)
+        ("LDW_DLC", "LDW_02", 0),                   # Lane departure, distance to line crossing
+        ("LDW_TLC", "LDW_02", 0),                   # Lane departure, time to line crossing
+      ]
+      checks += [
+        # sig_address, frequency
+        ("LDW_02", 10)      # From R242 Driver assistance camera
+      ]
+    else:
+      # Radars are here on CANBUS.cam
+      signals += MqbExtraSignals.fwd_radar_signals
+      checks += MqbExtraSignals.fwd_radar_checks
+      if CP.enableBsm:
+        signals += MqbExtraSignals.bsm_radar_signals
+        checks += MqbExtraSignals.bsm_radar_checks
+
     return CANParser(DBC_FILES.mqb, signals, checks, CANBUS.cam)
+
+class MqbExtraSignals:
+  # Additional signal and message lists for optional or bus-portable controllers
+  fwd_radar_signals = [
+    ("ACC_Wunschgeschw", "ACC_02", 0),              # ACC set speed
+    ("AWV2_Freigabe", "ACC_10", 0),                 # FCW brake jerk release
+    ("ANB_Teilbremsung_Freigabe", "ACC_10", 0),     # AEB partial braking release
+    ("ANB_Zielbremsung_Freigabe", "ACC_10", 0),     # AEB target braking release
+  ]
+  fwd_radar_checks = [
+    ("ACC_10", 50),                                 # From J428 ACC radar control module
+    ("ACC_02", 17),                                 # From J428 ACC radar control module
+  ]
+  bsm_radar_signals = [
+    ("SWA_Infostufe_SWA_li", "SWA_01", 0),          # Blind spot object info, left
+    ("SWA_Warnung_SWA_li", "SWA_01", 0),            # Blind spot object warning, left
+    ("SWA_Infostufe_SWA_re", "SWA_01", 0),          # Blind spot object info, right
+    ("SWA_Warnung_SWA_re", "SWA_01", 0),            # Blind spot object warning, right
+  ]
+  bsm_radar_checks = [
+    ("SWA_01", 20),                                 # From J1086 Lane Change Assist
+  ]
