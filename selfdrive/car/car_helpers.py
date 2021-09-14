@@ -87,7 +87,7 @@ def only_toyota_left(candidate_cars):
 
 # **** for use live only ****
 def fingerprint(logcan, sendcan):
-  fixed_fingerprint = "SKODA_SCALA_MK1"
+  fixed_fingerprint = "SKODA SCALA 1ST GEN"
   skip_fw_query = True
 
   if not fixed_fingerprint and not skip_fw_query:
