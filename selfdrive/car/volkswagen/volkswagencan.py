@@ -3,16 +3,17 @@
 
 def create_mqb_steering_control(packer, bus, apply_steer, idx, lkas_enabled):
   values = {
-    "HCA_Zaehler": idx,
-    "LM_Offset": abs(apply_steer),
-    "LM_OffSign": 1 if apply_steer < 0 else 0,
-    "HCA_Status": 7 if (lkas_enabled and apply_steer != 0) else 3,
-    "Vib_Freq": 16,
+    "SET_ME_0X3": 0x3,
+    "Assist_Torque": abs(apply_steer),
+    "Assist_Requested": lkas_enabled,
+    "Assist_VZ": 1 if apply_steer < 0 else 0,
+    "HCA_Available": 1,
+    "HCA_Standby": not lkas_enabled,
+    "HCA_Active": lkas_enabled,
+    "SET_ME_0XFE": 0xFE,
+    "SET_ME_0X07": 0x07,
   }
-
-  dat = packer.make_can_msg("HCA_1", bus, values)[2]
-  values["HCA_Checksumme"] = dat[1] ^ dat[2] ^ dat[3] ^ dat[4]
-  return packer.make_can_msg("HCA_1", bus, values)
+  return packer.make_can_msg("HCA_01", bus, values, idx)
 
 def create_mqb_hud_control(packer, bus, enabled, steering_pressed, hud_alert, left_lane_visible, right_lane_visible,
                            ldw_stock_values, left_lane_depart, right_lane_depart):
