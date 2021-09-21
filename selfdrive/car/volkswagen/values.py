@@ -31,7 +31,7 @@ class CarControllerParams:
 
 class CANBUS:
   pt = 0
-  cam = 2
+  cam = 0
 
 class DBC_FILES:
   mqb = "vw_mqb_2010"  # Used for all cars with MQB-style CAN messaging
