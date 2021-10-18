@@ -9,7 +9,7 @@ from selfdrive.swaglog import cloudlog
 
 TRAJECTORY_SIZE = 33
 # camera offset is meters from center car to camera
-CAMERA_OFFSET = -0.3
+CAMERA_OFFSET = -0.5
 PATH_OFFSET = 0.0
 
 class LanePlanner:
