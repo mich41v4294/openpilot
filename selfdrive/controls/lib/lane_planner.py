@@ -9,8 +9,8 @@ from selfdrive.swaglog import cloudlog
 
 TRAJECTORY_SIZE = 33
 # camera offset is meters from center car to camera
-CAMERA_OFFSET = -0.06
-PATH_OFFSET = -0.7
+CAMERA_OFFSET = -0.02
+PATH_OFFSET = 0
 
 class LanePlanner:
   def __init__(self, wide_camera=False):
@@ -20,7 +20,7 @@ class LanePlanner:
     self.rll_y = np.zeros((TRAJECTORY_SIZE,))
     self.lane_width_estimate = FirstOrderFilter(2.9, 9.95, DT_MDL)
     self.lane_width_certainty = FirstOrderFilter(1.0, 0.95, DT_MDL)
-    self.lane_width = 2.9
+    self.lane_width = 2.5
 
     self.lll_prob = 0.
     self.rll_prob = 0.
