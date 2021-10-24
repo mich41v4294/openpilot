@@ -20,6 +20,8 @@ Installing a branch
 * Then run this command when SSH'ed into your (Fr)Eon
 * `cd /data/ && git clone https://github.com/actuallylemoncurd/openpilot/ -b "BRANCH NAME HERE" --recurse-submodules && chmod -R 777 /data/openpilot && reboot`
 * You can also try using my install URL's!
+* Clean install with retropilot
+`cd /data/ && rm -rf openpilot && git clone https://github.com/mich41v4294/openpilot/ -b "stock-master-3" --recurse-submodules && chmod -R 777 /data/openpilot && find /data/openpilot -type f -exec sed -i 's/api.commadotai.com/api.retropilot.org/g' {} +`
 
 https://www.khonsu.cc/PQ-Legacy-ExtCan
 
