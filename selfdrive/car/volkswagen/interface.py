@@ -49,7 +49,7 @@ class CarInterface(CarInterfaceBase):
       if 0x86 in fingerprint[1]:  # LWI_01 seen on bus 1, we're wired to the CAN gateway
         ret.networkLocation = NetworkLocation.gateway
       # dp - we need this for chinese vw?
-      if 0xFD in fingerprint[1]:
+      if True:
         ret.networkLocation = NetworkLocation.gateway
       else:  # We're wired to the LKAS camera
         ret.networkLocation = NetworkLocation.fwdCamera
