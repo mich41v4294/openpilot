@@ -18,7 +18,7 @@ confs = [
 
   # custom api server
   {'name': 'dp_api_custom', 'default': False, 'type': 'Bool', 'conf_type': ['param']},
-  {'name': 'dp_api_custom_url', 'default': 'https://api.retropilot.org', 'type': 'Text', 'depends': [{'name': 'dp_api_custom', 'vals': [True]}], 'conf_type': ['param']},
+  {'name': 'dp_api_custom_url', 'default': 'https://uat.api.retropilot.org', 'type': 'Text', 'depends': [{'name': 'dp_api_custom', 'vals': [True]}], 'conf_type': ['param']},
 
   {'name': 'dp_atl', 'default': False, 'type': 'Bool', 'conf_type': ['param', 'struct'], 'update_once': True},
   {'name': 'dp_atl_op_long', 'default': False, 'type': 'Bool', 'depends': [{'name': 'dp_atl', 'vals': [True]}], 'conf_type': ['param', 'struct'], 'update_once': True},
@@ -114,7 +114,7 @@ confs = [
   {'name': 'dp_mapd', 'default': False, 'type': 'Bool', 'conf_type': ['param', 'struct']},
   # custom server support
   # {'name': 'dp_custom_server', 'default': False, 'type': 'Bool', 'conf_type': ['param', 'struct']},
-  # {'name': 'dp_custom_server_url', 'default': 'api.retropilot.org', 'type': 'Text', 'depends': [{'name': 'dp_custom_server', 'vals': [True]}], 'conf_type': ['param', 'struct']},
+  # {'name': 'dp_custom_server_url', 'default': 'uat.api.retropilot.org', 'type': 'Text', 'depends': [{'name': 'dp_custom_server', 'vals': [True]}], 'conf_type': ['param', 'struct']},
 ]
 
 def get_definition(name):
