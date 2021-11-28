@@ -1,5 +1,6 @@
 [submodule "panda"]
 	path = panda
+	branch = master-2
 	url = https://github.com/mich41v4294/panda.git
 [submodule "opendbc"]
 	path = opendbc
