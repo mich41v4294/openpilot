@@ -10,7 +10,7 @@ from selfdrive.swaglog import cloudlog
 TRAJECTORY_SIZE = 33
 # camera offset is meters from center car to camera
 CAMERA_OFFSET = -0.06
-PATH_OFFSET = 0.4
+PATH_OFFSET = 0.0
 
 
 
