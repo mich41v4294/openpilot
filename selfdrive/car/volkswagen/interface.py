@@ -1,9 +1,11 @@
 from cereal import car
-from selfdrive.car.volkswagen.values import CAR, BUTTON_STATES, CANBUS, NetworkLocation, TransmissionType, GearShifter, PQ_CARS
+from common.params import Params
+from panda import Panda
+from selfdrive.car.volkswagen.values import CAR, BUTTON_STATES, CANBUS, NetworkLocation, TransmissionType, GearShifter
 from selfdrive.car import STD_CARGO_KG, scale_rot_inertia, scale_tire_stiffness, gen_empty_fingerprint, get_safety_config
 from selfdrive.car.interfaces import CarInterfaceBase
-from common.dp_common import common_interface_atl, common_interface_get_params_lqr
 
+ButtonType = car.CarState.ButtonEvent.Type
 EventName = car.CarEvent.EventName
 
 
@@ -22,39 +24,33 @@ class CarInterface(CarInterfaceBase):
       self.cp_ext = self.cp_cam
 
   @staticmethod
-  def get_params(candidate, fingerprint=gen_empty_fingerprint(), car_fw=None):
+  def get_params(candidate, fingerprint=gen_empty_fingerprint(), car_fw=None, disable_radar=False):
     ret = CarInterfaceBase.get_std_params(candidate, fingerprint)
     ret.carName = "volkswagen"
     ret.radarOffCan = True
 
     if True:  # pylint: disable=using-constant-test
-
+      # Set global MQB parameters
+      ret.safetyConfigs = [get_safety_config(car.CarParams.SafetyModel.volkswagen)]
       ret.enableBsm = 0x30F in fingerprint[0]  # SWA_01
 
-      if candidate in PQ_CARS:
-        # Configurations shared between all PQ35/PQ46/NMS vehicles
-        ret.safetyConfigs = [get_safety_config(car.CarParams.SafetyModel.volkswagenPq)]
-
-        # Determine installed network location and trans type from fingerprint
-        ret.networkLocation = NetworkLocation.fwdCamera if 0x368 in fingerprint[0] else NetworkLocation.gateway
-        if 0x440 in fingerprint[0]:  # Getriebe_1
-          ret.transmissionType = TransmissionType.automatic
-        else:  # No trans at all
-          ret.transmissionType = TransmissionType.manual
+      if 0xAD in fingerprint[0]:  # Getriebe_11
+        ret.transmissionType = TransmissionType.automatic
+      elif 0x187 in fingerprint[0]:  # EV_Gearshift
+        ret.transmissionType = TransmissionType.direct
       else:
-        # Set global MQB parameters
-        ret.safetyConfigs = [get_safety_config(car.CarParams.SafetyModel.volkswagen)]
-        if 0xAD in fingerprint[0]:  # Getriebe_11
-          ret.transmissionType = TransmissionType.automatic
-        elif 0x187 in fingerprint[0]:  # EV_Gearshift
-          ret.transmissionType = TransmissionType.direct
-        else:
-          ret.transmissionType = TransmissionType.manual
+        ret.transmissionType = TransmissionType.manual
 
-        if any(msg in fingerprint[1] for msg in (0x40, 0x86, 0xB2, 0xFD)):  # Airbag_01, LWI_01, ESP_19, ESP_21
-          ret.networkLocation = NetworkLocation.gateway
-        else:
-          ret.networkLocation = NetworkLocation.fwdCamera
+      if any(msg in fingerprint[1] for msg in (0x40, 0x86, 0xB2, 0xFD)):  # Airbag_01, LWI_01, ESP_19, ESP_21
+        ret.networkLocation = NetworkLocation.gateway
+      else:
+        ret.networkLocation = NetworkLocation.fwdCamera
+
+      if Params().get_bool("DisableRadar") and ret.networkLocation == NetworkLocation.gateway:
+        ret.openpilotLongitudinalControl = True
+        ret.safetyConfigs[0].safetyParam |= Panda.FLAG_VOLKSWAGEN_LONG_CONTROL
+        if ret.transmissionType == TransmissionType.manual:
+          ret.minEnableSpeed = 4.5  # FIXME: estimated, fine-tune
 
     # Global lateral tuning defaults, can be overridden per-vehicle
 
@@ -68,6 +64,16 @@ class CarInterface(CarInterfaceBase):
     ret.lateralTuning.pid.kf = 0.00006
     ret.lateralTuning.pid.kpV = [0.6]
     ret.lateralTuning.pid.kiV = [0.2]
+
+    # Global longitudinal tuning defaults, can be overridden per-vehicle
+
+    ret.pcmCruise = not ret.openpilotLongitudinalControl
+    ret.longitudinalActuatorDelayUpperBound = 0.5  # s
+    ret.stoppingControl = True
+    ret.vEgoStopping = 1.0
+    ret.stopAccel = -1.0
+    ret.longitudinalTuning.kpV = [0.1]
+    ret.longitudinalTuning.kiV = [0.0]
 
     # Per-chassis tuning values, override tuning defaults here if desired
 
@@ -164,11 +170,6 @@ class CarInterface(CarInterfaceBase):
       ret.mass = 1505 + STD_CARGO_KG
       ret.wheelbase = 2.84
 
-    elif candidate == CAR.GENERICPQ:
-      ret.mass = 1375 + STD_CARGO_KG  # Average, varies on trim/package
-      ret.wheelbase = 2.58
-      ret.steerRatio = 15.6
-      tire_stiffness_factor = 1.0
     else:
       raise ValueError(f"unsupported car {candidate}")
 
@@ -176,13 +177,10 @@ class CarInterface(CarInterfaceBase):
     ret.centerToFront = ret.wheelbase * 0.45
     ret.tireStiffnessFront, ret.tireStiffnessRear = scale_tire_stiffness(ret.mass, ret.wheelbase, ret.centerToFront,
                                                                          tire_stiffness_factor=tire_stiffness_factor)
-    # dp
-    ret = common_interface_get_params_lqr(ret)
-
     return ret
 
   # returns a car.CarState
-  def update(self, c, can_strings, dragonconf):
+  def update(self, c, can_strings):
     buttonEvents = []
 
     # Process the most recent CAN message traffic, and check for validity
@@ -192,9 +190,6 @@ class CarInterface(CarInterfaceBase):
     self.cp_cam.update_strings(can_strings)
 
     ret = self.CS.update(self.cp, self.cp_cam, self.cp_ext, self.CP.transmissionType)
-    # dp
-    self.dragonconf = dragonconf
-    ret.cruiseState.enabled = common_interface_atl(ret, dragonconf.dpAtl)
     ret.canValid = self.cp.can_valid and self.cp_cam.can_valid
     ret.steeringRateLimited = self.CC.steer_rate_limited if self.CC is not None else False
 
@@ -207,11 +202,10 @@ class CarInterface(CarInterfaceBase):
         be.pressed = self.CS.buttonStates[button]
         buttonEvents.append(be)
 
-    events = self.create_common_events(ret, extra_gears=[GearShifter.eco, GearShifter.sport, GearShifter.manumatic])
+    events = self.create_common_events(ret, extra_gears=[GearShifter.eco, GearShifter.sport, GearShifter.manumatic],
+                                       pcm_enable=not self.CS.CP.openpilotLongitudinalControl)
 
     # Vehicle health and operation safety checks
-    if self.CS.parkingBrakeSet:
-      events.add(EventName.parkBrake)
     if self.CS.tsk_status in (6, 7):
       events.add(EventName.accFaulted)
 
@@ -222,6 +216,19 @@ class CarInterface(CarInterfaceBase):
       self.low_speed_alert = False
     if self.low_speed_alert:
       events.add(EventName.belowSteerSpeed)
+
+    if self.CS.CP.openpilotLongitudinalControl:
+      if ret.vEgo < self.CP.minEnableSpeed + 2.:
+        events.add(EventName.belowEngageSpeed)
+      if c.enabled and ret.vEgo < self.CP.minEnableSpeed:
+        events.add(EventName.speedTooLow)
+      for b in buttonEvents:
+        # do enable on falling edge of both accel and decel buttons
+        if b.type in (ButtonType.setCruise, ButtonType.resumeCruise) and not b.pressed:
+          events.add(EventName.buttonEnable)
+        # do disable on rising edge of cancel
+        if b.type == "cancel" and b.pressed:
+          events.add(EventName.buttonCancel)
 
     ret.events = events.to_msg()
     ret.buttonEvents = buttonEvents
@@ -235,12 +242,13 @@ class CarInterface(CarInterfaceBase):
 
   def apply(self, c):
     hud_control = c.hudControl
-    ret = self.CC.update(c, c.enabled, self.CS, self.frame, self.ext_bus, c.actuators,
+    ret = self.CC.update(c, self.CS, self.frame, self.ext_bus, c.actuators,
                          hud_control.visualAlert,
                          hud_control.leftLaneVisible,
                          hud_control.rightLaneVisible,
                          hud_control.leftLaneDepart,
                          hud_control.rightLaneDepart,
-                         self.dragonconf)
+                         hud_control.leadVisible,
+                         hud_control.setSpeed)
     self.frame += 1
     return ret
