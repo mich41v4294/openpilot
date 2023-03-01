@@ -457,51 +457,51 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.preDriverDistracted: {
-    ET.WARNING: Alert(
-      _("Pay Attention"),
-      "",
-      AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.none, AudibleAlert.none, .1),
+    #ET.WARNING: Alert(
+    #  _("Pay Attention"),
+    #  "",
+    #  AlertStatus.normal, AlertSize.small,
+    #  Priority.LOW, VisualAlert.none, AudibleAlert.none, .1),
   },
 
   EventName.promptDriverDistracted: {
-    ET.WARNING: Alert(
-      _("Pay Attention"),
-      _("Driver Distracted"),
-      AlertStatus.userPrompt, AlertSize.mid,
-      Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted, .1),
+    #ET.WARNING: Alert(
+    #  _("Pay Attention"),
+    #  _("Driver Distracted"),
+    #  AlertStatus.userPrompt, AlertSize.mid,
+    # Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted, .1),
   },
 
   EventName.driverDistracted: {
-    ET.WARNING: Alert(
-      _("DISENGAGE IMMEDIATELY"),
-      _("Driver Distracted"),
-      AlertStatus.critical, AlertSize.full,
-      Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
+    #ET.WARNING: Alert(
+    #  _("DISENGAGE IMMEDIATELY"),
+    #  _("Driver Distracted"),
+    #  AlertStatus.critical, AlertSize.full,
+    #  Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
   },
 
   EventName.preDriverUnresponsive: {
-    ET.WARNING: Alert(
-      _("Touch Steering Wheel: No Face Detected"),
-      "",
-      AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.none, .1, alert_rate=0.75),
+    #ET.WARNING: Alert(
+    #  _("Touch Steering Wheel: No Face Detected"),
+    #  "",
+    #  AlertStatus.normal, AlertSize.small,
+    #  Priority.LOW, VisualAlert.steerRequired, AudibleAlert.none, .1, alert_rate=0.75),
   },
 
   EventName.promptDriverUnresponsive: {
-    ET.WARNING: Alert(
-      _("Touch Steering Wheel"),
-      _("Driver Unresponsive"),
-      AlertStatus.userPrompt, AlertSize.mid,
-      Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted, .1),
+    #ET.WARNING: Alert(
+    #  _("Touch Steering Wheel"),
+    #  _("Driver Unresponsive"),
+    #  AlertStatus.userPrompt, AlertSize.mid,
+    #  Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted, .1),
   },
 
   EventName.driverUnresponsive: {
-    ET.WARNING: Alert(
-      _("DISENGAGE IMMEDIATELY"),
-      _("Driver Unresponsive"),
-      AlertStatus.critical, AlertSize.full,
-      Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
+    #ET.WARNING: Alert(
+    #  _("DISENGAGE IMMEDIATELY"),
+    #  _("Driver Unresponsive"),
+    #  AlertStatus.critical, AlertSize.full,
+    #  Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
   },
 
   EventName.manualRestart: {
