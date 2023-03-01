@@ -695,13 +695,13 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.sensorDataInvalid: {
-    ET.PERMANENT: Alert(
-      _("Sensor Data Invalid"),
-      _("Ensure device is mounted securely"),
-      AlertStatus.normal, AlertSize.mid,
-      Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=1.),
-    ET.NO_ENTRY: NoEntryAlert(_("Sensor Data Invalid")),
-    ET.SOFT_DISABLE: soft_disable_alert(_("Sensor Data Invalid")),
+    #ET.PERMANENT: Alert(
+    #  _("Sensor Data Invalid"),
+    #  _("Ensure device is mounted securely"),
+    #  AlertStatus.normal, AlertSize.mid,
+    #  Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=1.),
+    #ET.NO_ENTRY: NoEntryAlert(_("Sensor Data Invalid")),
+    #ET.SOFT_DISABLE: soft_disable_alert(_("Sensor Data Invalid")),
   },
 
   EventName.noGps: {
@@ -770,8 +770,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   # is thrown. This can mean a service crashed, did not broadcast a message for
   # ten times the regular interval, or the average interval is more than 10% too high.
   EventName.commIssue: {
-    ET.SOFT_DISABLE: soft_disable_alert(_("Communication Issue between Processes")),
-    ET.NO_ENTRY: comm_issue_alert,
+    #ET.SOFT_DISABLE: soft_disable_alert(_("Communication Issue between Processes")),
+    #ET.NO_ENTRY: comm_issue_alert,
   },
   EventName.commIssueAvgFreq: {
     ET.SOFT_DISABLE: soft_disable_alert(_("Low Communication Rate between Processes")),
@@ -843,8 +843,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.controlsMismatch: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert(_("Controls Mismatch")),
-    ET.NO_ENTRY: NoEntryAlert(_("Controls Mismatch")),
+    #ET.IMMEDIATE_DISABLE: ImmediateDisableAlert(_("Controls Mismatch")),
+    #ET.NO_ENTRY: NoEntryAlert(_("Controls Mismatch")),
   },
 
   EventName.roadCameraError: {
