@@ -449,11 +449,11 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.steerTempUnavailableSilent: {
-    ET.PERMANENT: Alert(
-      _("Steering Temporarily Unavailable"),
-      "",
-      AlertStatus.userPrompt, AlertSize.small,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.prompt, 1.8),
+    #ET.PERMANENT: Alert(
+    #  _("Steering Temporarily Unavailable"),
+    #  "",
+    #  AlertStatus.userPrompt, AlertSize.small,
+    #  Priority.LOW, VisualAlert.steerRequired, AudibleAlert.prompt, 1.8),
   },
 
   EventName.preDriverDistracted: {
@@ -680,9 +680,9 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.steerTempUnavailable: {
-    ET.PERMANENT: soft_disable_alert(_("Steering Temporarily Unavailable")),
-    ET.SOFT_DISABLE: soft_disable_alert(_("Steering Temporarily Unavailable")),
-    ET.NO_ENTRY: NoEntryAlert(_("Steering Temporarily Unavailable")),
+    #ET.PERMANENT: soft_disable_alert(_("Steering Temporarily Unavailable")),
+    #ET.SOFT_DISABLE: soft_disable_alert(_("Steering Temporarily Unavailable")),
+    #ET.NO_ENTRY: NoEntryAlert(_("Steering Temporarily Unavailable")),
   },
 
   EventName.outOfSpace: {
