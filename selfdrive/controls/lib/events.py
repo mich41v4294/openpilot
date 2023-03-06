@@ -705,7 +705,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.noGps: {
-    ET.PERMANENT: no_gps_alert,
+    #ET.PERMANENT: no_gps_alert,
   },
 
   EventName.soundsUnavailable: {
@@ -714,7 +714,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.tooDistracted: {
-    ET.NO_ENTRY: NoEntryAlert(_("Distraction Level Too High")),
+    #ET.NO_ENTRY: NoEntryAlert(_("Distraction Level Too High")),
   },
 
   EventName.overheat: {
@@ -756,8 +756,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.espDisabled: {
-    ET.SOFT_DISABLE: soft_disable_alert(_("ESP Off")),
-    ET.NO_ENTRY: NoEntryAlert(_("ESP Off")),
+    #ET.SOFT_DISABLE: soft_disable_alert(_("ESP Off")),
+    #ET.NO_ENTRY: NoEntryAlert(_("ESP Off")),
   },
 
   EventName.lowBattery: {
