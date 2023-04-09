@@ -1,10 +1,10 @@
 [submodule "panda"]
 	path = panda
-	url = ../../mich41v4294/panda.git
+	url = https://github.com/mich41v4294/panda.git
 	branch = mqb-pla
 [submodule "opendbc"]
 	path = opendbc
-	url = ../../mich41v4294/opendbc.git
+	url = https://github.com/mich41v4294/opendbc.git
 	branch = mqb-pla
 [submodule "laika_repo"]
 	path = laika_repo
