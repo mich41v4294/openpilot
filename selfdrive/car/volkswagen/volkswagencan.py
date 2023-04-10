@@ -48,7 +48,7 @@ def create_mqb_acc_buttons_control(packer, bus, buttonStatesToSend, CS, idx):
   }
   return packer.make_can_msg("GRA_ACC_01", bus, values, idx)
 
-def pla_control(packer, bus, angle, pla_enabled):
+def pla_control(packer, bus, angle, pla_enabled, idx):
   values = {
     "Status_1": 0,
     "steer_deg": abs(angle),
@@ -57,4 +57,4 @@ def pla_control(packer, bus, angle, pla_enabled):
     "Status_3": pla_enabled,
     "Status_4": not pla_enabled,
   }
-  return packer.make_can_msg("PLA_01", bus, values)
+  return packer.make_can_msg("PLA_01", bus, values, idx)

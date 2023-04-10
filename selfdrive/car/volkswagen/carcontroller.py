@@ -18,6 +18,7 @@ class CarController():
     self.graMsgSentCount = 0
     self.graMsgStartFramePrev = 0
     self.graMsgBusCounterPrev = 0
+    self.plaCounter = 0
 
     self.steer_rate_limited = False
 
@@ -116,6 +117,7 @@ class CarController():
     # **** PLA Controls ********************************************** #
 
     if frame % P.GRA_ACC_STEP == 0: #33hz frequency same as ACC
-      can_sends.append(volkswagencan.pla_control(self.packer_pt, ext_bus, 300, True))
+      self.plaCounter = (self.plaCounter + 1) % 16 if self.plaCounter < 15 else 0
+      can_sends.append(volkswagencan.pla_control(self.packer_pt, ext_bus, 300, True, self.plaCounter))
 
     return new_actuators, can_sends
