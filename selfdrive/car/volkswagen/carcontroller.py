@@ -118,6 +118,6 @@ class CarController():
 
     if frame % P.GRA_ACC_STEP == 0: #33hz frequency same as ACC
       self.plaCounter = (self.plaCounter + 1) % 16 if self.plaCounter < 15 else 0
-      can_sends.append(volkswagencan.pla_control(self.packer_pt, ext_bus, 300, True, self.plaCounter))
+      can_sends.append(volkswagencan.pla_control(self.packer_pt, CANBUS.pt, 300, True))
 
     return new_actuators, can_sends
