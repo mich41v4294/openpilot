@@ -112,7 +112,10 @@ class CarController():
 
     new_actuators = actuators.copy()
     new_actuators.steer = self.apply_steer_last / P.STEER_MAX
-    
-    can_sends.append(volkswagencan.pla_control(self.packer_pt, ext_bus, 300, True))
+
+    # **** PLA Controls ********************************************** #
+
+    if frame % P.GRA_ACC_STEP == 0: #33hz frequency same as ACC
+      can_sends.append(volkswagencan.pla_control(self.packer_pt, ext_bus, 300, True))
 
     return new_actuators, can_sends
