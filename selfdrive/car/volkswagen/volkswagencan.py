@@ -51,8 +51,8 @@ def create_mqb_acc_buttons_control(packer, bus, buttonStatesToSend, CS, idx):
 def pla_control(packer, bus, angle, pla_enabled, idx):
   values = {
     "Status_1": 0,
-    "steer_deg": abs(angle),
-    "steer_direction": 1 if angle < 0 else 0,
+    "Lenkradwinkel": abs(angle),
+    "Lenkradwinkel_VZ": 1 if angle < 0 else 0,
     "Status_2": pla_enabled,
     "Status_3": pla_enabled,
     "Status_4": not pla_enabled,
