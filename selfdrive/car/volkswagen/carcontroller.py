@@ -19,6 +19,8 @@ class CarController():
     self.graMsgStartFramePrev = 0
     self.graMsgBusCounterPrev = 0
     self.plaCounter = 0
+    self.plaSteerAngle = 5
+    self.plaTest = 0
 
     self.steer_rate_limited = False
 
@@ -115,9 +117,20 @@ class CarController():
     new_actuators.steer = self.apply_steer_last / P.STEER_MAX
 
     # **** PLA Controls ********************************************** #
+    print("PLA ENGAGED", str(frame < 500))
 
-    if frame % P.GRA_ACC_STEP == 0: #33hz frequency same as ACC
-      self.plaCounter = (self.plaCounter + 1) % 16 if self.plaCounter < 15 else 0
-      can_sends.append(volkswagencan.pla_control(self.packer_pt, CANBUS.pt, 300, True, self.plaCounter))
+    self.plaSteerAngle = -5 if self.plaTest < 100 else 5
+    self.plaTest = (self.plaTest + 1) % 200
+
+    if frame < 500:
+      # **** PLA Startup ********************* #
+      if frame % P.PLA_INACTIVE_STEP == 0: #1hz frequency when PLA inactive
+        self.plaCounter = (self.plaCounter + 1) % 16 if self.plaCounter < 15 else 0
+        can_sends.append(volkswagencan.pla_control(self.packer_pt, CANBUS.pt, self.plaSteerAngle, False, self.plaCounter))
+    else:
+      # **** PLA Active ************************* #
+      if frame % P.PLA_STEP == 0: #33hz frequency same as ACC
+        self.plaCounter = (self.plaCounter + 1) % 16 if self.plaCounter < 15 else 0
+        can_sends.append(volkswagencan.pla_control(self.packer_pt, CANBUS.pt, self.plaSteerAngle, True, self.plaCounter))
 
     return new_actuators, can_sends

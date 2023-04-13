@@ -13,6 +13,8 @@ class CarControllerParams:
   HCA_STEP = 2                   # HCA_01 message frequency 50Hz
   LDW_STEP = 10                  # LDW_02 message frequency 10Hz
   GRA_ACC_STEP = 3               # GRA_ACC_01 message frequency 33Hz
+  PLA_STEP = 3                   # PLA_01 message frequency when active 33Hz
+  PLA_INACTIVE_STEP = 100        # PLA_01 message frequency when inactive 1Hz
 
   GRA_VBP_STEP = 100             # Send ACC virtual button presses once a second
   GRA_VBP_COUNT = 16             # Send VBP messages for ~0.5s (GRA_ACC_STEP * 16)
