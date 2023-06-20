@@ -445,59 +445,59 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.steerTempUnavailableSilent: {
-    ET.WARNING: Alert(
-      _("Steering Temporarily Unavailable"),
-      "",
-      AlertStatus.userPrompt, AlertSize.small,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.prompt, 1.8),
+    #ET.WARNING: Alert(
+    #  _("Steering Temporarily Unavailable"),
+    #  "",
+    #  AlertStatus.userPrompt, AlertSize.small,
+    #  Priority.LOW, VisualAlert.steerRequired, AudibleAlert.prompt, 1.8),
   },
 
   EventName.preDriverDistracted: {
-    ET.WARNING: Alert(
-      _("Pay Attention"),
-      "",
-      AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.none, AudibleAlert.none, .1),
+    #ET.WARNING: Alert(
+    #  _("Pay Attention"),
+    #  "",
+    #  AlertStatus.normal, AlertSize.small,
+    #  Priority.LOW, VisualAlert.none, AudibleAlert.none, .1),
   },
 
   EventName.promptDriverDistracted: {
-    ET.WARNING: Alert(
-      _("Pay Attention"),
-      _("Driver Distracted"),
-      AlertStatus.userPrompt, AlertSize.mid,
-      Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted, .1),
+    #ET.WARNING: Alert(
+    #  _("Pay Attention"),
+    #  _("Driver Distracted"),
+    #  AlertStatus.userPrompt, AlertSize.mid,
+    #  Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted, .1),
   },
 
   EventName.driverDistracted: {
-    ET.WARNING: Alert(
-      _("DISENGAGE IMMEDIATELY"),
-      _("Driver Distracted"),
-      AlertStatus.critical, AlertSize.full,
-      Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
+    #ET.WARNING: Alert(
+    #  _("DISENGAGE IMMEDIATELY"),
+    #  _("Driver Distracted"),
+    #  AlertStatus.critical, AlertSize.full,
+    #  Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
   },
 
   EventName.preDriverUnresponsive: {
-    ET.WARNING: Alert(
-      _("Touch Steering Wheel: No Face Detected"),
-      "",
-      AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.none, .1, alert_rate=0.75),
+    #ET.WARNING: Alert(
+    #  _("Touch Steering Wheel: No Face Detected"),
+    #  "",
+    #  AlertStatus.normal, AlertSize.small,
+    #  Priority.LOW, VisualAlert.steerRequired, AudibleAlert.none, .1, alert_rate=0.75),
   },
 
   EventName.promptDriverUnresponsive: {
-    ET.WARNING: Alert(
-      _("Touch Steering Wheel"),
-      _("Driver Unresponsive"),
-      AlertStatus.userPrompt, AlertSize.mid,
-      Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted, .1),
+    #ET.WARNING: Alert(
+    #  _("Touch Steering Wheel"),
+    #  _("Driver Unresponsive"),
+    #  AlertStatus.userPrompt, AlertSize.mid,
+    #  Priority.MID, VisualAlert.steerRequired, AudibleAlert.promptDistracted, .1),
   },
 
   EventName.driverUnresponsive: {
-    ET.WARNING: Alert(
-      _("DISENGAGE IMMEDIATELY"),
-      _("Driver Unresponsive"),
-      AlertStatus.critical, AlertSize.full,
-      Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
+    #ET.WARNING: Alert(
+    #  _("DISENGAGE IMMEDIATELY"),
+    #  _("Driver Unresponsive"),
+    #  AlertStatus.critical, AlertSize.full,
+    #  Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.warningImmediate, .1),
   },
 
   EventName.manualRestart: {
@@ -664,8 +664,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.steerTempUnavailable: {
-    ET.SOFT_DISABLE: soft_disable_alert(_("Steering Temporarily Unavailable")),
-    ET.NO_ENTRY: NoEntryAlert(_("Steering Temporarily Unavailable")),
+    #ET.SOFT_DISABLE: soft_disable_alert(_("Steering Temporarily Unavailable")),
+    #ET.NO_ENTRY: NoEntryAlert(_("Steering Temporarily Unavailable")),
   },
 
   EventName.steerTimeLimit: {
@@ -683,17 +683,17 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.sensorDataInvalid: {
-    ET.PERMANENT: Alert(
-      _("Sensor Data Invalid"),
-      _("Ensure device is mounted securely"),
-      AlertStatus.normal, AlertSize.mid,
-      Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=1.),
-    ET.NO_ENTRY: NoEntryAlert(_("Sensor Data Invalid")),
-    ET.SOFT_DISABLE: soft_disable_alert(_("Sensor Data Invalid")),
+    #ET.PERMANENT: Alert(
+    #  _("Sensor Data Invalid"),
+    #  _("Ensure device is mounted securely"),
+    #  AlertStatus.normal, AlertSize.mid,
+    #  Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=1.),
+    #ET.NO_ENTRY: NoEntryAlert(_("Sensor Data Invalid")),
+    #ET.SOFT_DISABLE: soft_disable_alert(_("Sensor Data Invalid")),
   },
 
   EventName.noGps: {
-    ET.PERMANENT: no_gps_alert,
+    #ET.PERMANENT: no_gps_alert,
   },
 
   EventName.soundsUnavailable: {
@@ -702,13 +702,13 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.tooDistracted: {
-    ET.NO_ENTRY: NoEntryAlert(_("Distraction Level Too High")),
+    #ET.NO_ENTRY: NoEntryAlert(_("Distraction Level Too High")),
   },
 
   EventName.overheat: {
     ET.PERMANENT: overheat_alert,
-    ET.SOFT_DISABLE: soft_disable_alert(_("System Overheated")),
-    ET.NO_ENTRY: NoEntryAlert(_("System Overheated")),
+    #ET.SOFT_DISABLE: soft_disable_alert(_("System Overheated")),
+    #ET.NO_ENTRY: NoEntryAlert(_("System Overheated")),
   },
 
   EventName.wrongGear: {
@@ -750,8 +750,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.espDisabled: {
-    ET.SOFT_DISABLE: soft_disable_alert(_("Electronic Stability Control Disabled")),
-    ET.NO_ENTRY: NoEntryAlert(_("Electronic Stability Control Disabled")),
+    #ET.SOFT_DISABLE: soft_disable_alert(_("Electronic Stability Control Disabled")),
+    #ET.NO_ENTRY: NoEntryAlert(_("Electronic Stability Control Disabled")),
   },
 
   EventName.lowBattery: {
@@ -764,8 +764,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   # is thrown. This can mean a service crashed, did not broadcast a message for
   # ten times the regular interval, or the average interval is more than 10% too high.
   EventName.commIssue: {
-    ET.SOFT_DISABLE: soft_disable_alert(_("Communication Issue between Processes")),
-    ET.NO_ENTRY: comm_issue_alert,
+    #ET.SOFT_DISABLE: soft_disable_alert(_("Communication Issue between Processes")),
+    #ET.NO_ENTRY: comm_issue_alert,
   },
   EventName.commIssueAvgFreq: {
     ET.SOFT_DISABLE: soft_disable_alert(_("Low Communication Rate between Processes")),
@@ -833,8 +833,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.controlsMismatch: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert(_("Controls Mismatch")),
-    ET.NO_ENTRY: NoEntryAlert(_("Controls Mismatch")),
+    #ET.IMMEDIATE_DISABLE: ImmediateDisableAlert(_("Controls Mismatch")),
+    #ET.NO_ENTRY: NoEntryAlert(_("Controls Mismatch")),
   },
 
   EventName.roadCameraError: {
